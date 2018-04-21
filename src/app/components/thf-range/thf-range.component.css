@@ -1,0 +1,133 @@
+.thf-range-container {
+	display: flex;
+	font-family: Arial;
+	position: relative;
+}
+
+.thf-range-interval-text {
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: 1.5;
+    text-align: right;
+}
+
+.thf-range-minor-text {
+    margin-right: 20px;
+}
+
+.thf-range-major-text {
+    margin-left: 20px;
+}
+
+.thf-range-slider{
+    flex-basis: 100%;
+    position: relative;
+ }
+
+ .thf-range-slider-bar {
+    background: #eceeee;
+	border: none;   
+	border-radius: 14px;
+    height: 5px;
+	left: 0;
+	margin: 0;
+	outline: none;
+    padding: 0;
+	position: absolute;
+	top: 10px;
+    width: 100%;
+ }
+
+input[type=range]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    pointer-events: none;
+}
+
+.thf-range-slider-bar-selected {
+    background: #0c9abe;
+}
+
+input[type=range]::-ms-thumb {
+    -moz-appearance: none;
+    appearance: none;
+    background: #0c9abe;
+	border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    height: 16px;
+	outline: 0; 
+    pointer-events: all;
+	position: relative;
+    width: 16px;
+	z-index: 2;
+}
+
+input[type=range]::-moz-range-thumb {
+    -moz-appearance: none;
+    background: #0c9abe;
+	border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    height: 16px;
+	outline: 0; 
+    pointer-events: all;
+	position: relative;
+    width: 16px;
+	z-index: 2;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+    background: #0c9abe;
+	border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    height: 16px;
+	outline: 0; 
+    pointer-events: all;
+	position: relative;
+    width: 16px;
+	z-index: 2;
+}
+
+input[type=range]::-ms-thumb {
+    height: 20px;
+    width: 20px;
+}
+
+input[type=range]::-moz-ramge-thumb {
+    height: 20px;
+    width: 20px;
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    height: 20px;
+    width: 20px;
+}
+
+input[type=range]:disabled::-ms-thumb {
+    background: #b6bdbf;
+    height: 12px;
+    width: 12px;
+}
+input[type=range]:disabled::-moz-range-thumb {
+    background: #b6bdbf;
+	height: 12px;
+	width: 12px;
+}
+
+input[type=range]:disabled::-webkit-slider-thumb {
+    background: #b6bdbf;
+    height: 12px;
+    width: 12px;
+}
+
+input[type=range]:disabled ~ .bar{
+	background: #b6bdbf !important;
+}
