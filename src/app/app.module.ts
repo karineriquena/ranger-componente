@@ -8,12 +8,17 @@ import { RouterModule } from '@angular/router';
 import { ThfModule } from '@totvs/thf-ui';
 
 import { AppComponent } from './app.component';
-import { ThfRangeComponent } from './components/thf-range/thf-range.component';
+import { ThfRangeModule } from './components/thf-range';
+import { SampleThfRangeBasicComponent } from './components/thf-range/samples/sample-basic/sample-thf-range-basic.component';
+import { SampleThfRangeLabsComponent } from './components/thf-range/samples/sample-labs/sample-thf-range-labs.component';
+import { SampleThfRangeUseCaseComponent } from './components/thf-range/samples/sample-use-case/sample-thf-range-use-case.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ThfRangeComponent
+    SampleThfRangeBasicComponent,
+    SampleThfRangeLabsComponent,
+    SampleThfRangeUseCaseComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +26,8 @@ import { ThfRangeComponent } from './components/thf-range/thf-range.component';
     CommonModule,
     RouterModule.forRoot([]),
     // Adicionando aos imports do módulo principal da aplicação
-    ThfModule
+    ThfModule,
+    ThfRangeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

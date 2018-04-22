@@ -1,0 +1,133 @@
+<div class="thf-row">
+    <h3>Totvs Range Labs</h3>
+    <thf-range style="margin-bottom: 25px;"
+        class="thf-lg-12"
+        name="thf-range-labs"
+        [t-help]="help"
+        [t-label]="label"
+        [t-minValue]="minValue"
+        [t-maxValue]="maxValue"
+        [t-interval]="interval"
+        [t-initialValue]="initialValue"
+        [t-finalValue]="finalValue"
+        (t-change)="changeInterval($event)"
+        [t-required]="properties.includes('required')"
+        [t-disabled]="properties.includes('disabled')"
+        [t-indicators]="properties.includes('indicators')">
+    </thf-range>
+
+</div>
+
+<!-- Properties -->
+<form #f="ngForm">
+
+    <div class="thf-row">
+        <thf-info
+            class="thf-md-4"
+            t-label="Minor Selected Value"
+            [t-value]="numbers[0]">
+        </thf-info>
+        <thf-info
+            class="thf-md-4"
+            t-label="Major Selected Value"
+            [t-value]="numbers[1]">
+        </thf-info>
+        <thf-info
+            class="thf-md-4"
+            t-label="Event"
+            t-value="On Input">
+        </thf-info>
+    </div>
+
+    <div class="thf-row">
+                
+        <thf-input
+            class="thf-md-6"
+            name="label"
+            [(ngModel)]="label"
+            t-clean
+            t-label="Label"
+            t-required>
+        </thf-input>
+            
+        <thf-input
+            class="thf-md-6"
+            name="help"
+            [(ngModel)]="help"
+            t-clean
+            t-label="Help">
+        </thf-input>
+
+    </div>
+
+    <div class="thf-row">
+                
+        <thf-input
+            class="thf-md-4"
+            name="minValue"
+            [(ngModel)]="minValue"
+            t-clean
+            t-label="Min Value"
+            t-required>
+        </thf-input>
+                
+        <thf-input
+            class="thf-md-4"
+            name="maxValue"
+            [(ngModel)]="maxValue"
+            t-clean
+            t-label="Max Value">
+        </thf-input>
+
+        <thf-input
+            class="thf-md-4"
+            name="interval"
+            [(ngModel)]="interval"
+            t-clean
+            t-label="Interval between numbers">
+        </thf-input>
+            
+    </div>
+
+    <div class="thf-row">
+                
+        <thf-input
+            class="thf-md-6"
+            name="initialValue"
+            [(ngModel)]="initialValue"
+            t-clean
+            t-label="Initial range value selected"
+            t-required>
+        </thf-input>
+                
+        <thf-input
+            class="thf-md-6"
+            name="finalValue"
+            [(ngModel)]="finalValue"
+            t-clean
+            t-label="Final range value selected">
+        </thf-input>
+            
+    </div>
+
+    <div class="thf-row">
+
+        <thf-checkbox-group
+            class="thf-md-12"
+            name="properties"
+            [(ngModel)]="properties"
+            t-label="Properties"
+            [t-options]="propertiesOptions">
+        </thf-checkbox-group>
+
+    </div>
+
+    <!-- <div class="thf-row">
+        <thf-button
+            class="thf-md-3"
+            t-label="Sample Restore"
+            (t-click)="restore()">
+        </thf-button>
+    </div> -->
+      
+</form>

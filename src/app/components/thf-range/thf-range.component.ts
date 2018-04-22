@@ -8,11 +8,15 @@ import { convertToBoolean } from '../../utils/util';
 })
 export class ThfRangeComponent implements OnInit {
 
-  constructor(el: ElementRef) {  
-    this._el = el;
-  }  
-
-  private _el: ElementRef;
+  constructor() { }  
+  
+  private _intervalBeforeSelected: number;
+  set intervalBeforeSelected(intervalBeforeSelected: number) {
+    this._intervalBeforeSelected = intervalBeforeSelected;
+  }
+  get intervalBeforeSelected(): number {
+    return this._intervalBeforeSelected;
+  }
 
   private _intervalSelected: number;
   set intervalSelected(intervalSelected: number) {
@@ -20,45 +24,26 @@ export class ThfRangeComponent implements OnInit {
   }
   get intervalSelected(): number {
     return this._intervalSelected;
- }
-
-  private _intervalBeforeSelected: number;
-  set intervalBeforeSelected(intervalBeforeSelected: number) {
-    this._intervalBeforeSelected = intervalBeforeSelected;
   }
-  get intervalBeforeSelected(): number {
-    return this._intervalBeforeSelected;
- }
-  
-  private _minorSelectedValue: number = 0;
-  set minorSelectedValue(minorSelectedValue: number) {
-    this._minorSelectedValue = minorSelectedValue;
-  }
-  get minorSelectedValue(): number {
-     return this._minorSelectedValue;
-  }
-  
-  private _majorSelectedValue: number = 0;
-  set majorSelectedValue(majorSelectedValue: number) {
-    this._majorSelectedValue = majorSelectedValue;
-  }
-  get majorSelectedValue(): number {
-    return this._majorSelectedValue;
-  }
-
-/** Label do campo */
-  @Input('t-label') label: string;
-
-  /** Texto de apoio do campo */
-  @Input('t-help') help?: string;
 
   /** Nome e identificador do Input */
   @Input('name') name: string;
 
+  /** Texto de apoio do campo */
+  @Input('t-help') help?: string;
+
+  /** Label do campo */
+  @Input('t-label') label: string;
+
   // valor em que começa selecionado o valor inicial
   private _initialValue?: number = 0;
   @Input('t-initialValue') set initialValue(initialValue: number) {
-    this._initialValue = initialValue;
+    if (initialValue <= this.finalValue) {
+      this._initialValue = initialValue;
+    }else {
+      this._initialValue = this.finalValue;
+    }
+    this.calcIntervalBar();
   }
   get initialValue(): number {
     return this._initialValue;
@@ -67,7 +52,12 @@ export class ThfRangeComponent implements OnInit {
   // valor em que começa selecionado o valor inicial
   private _finalValue?: number = 0;
   @Input('t-finalValue') set finalValue(finalValue: number) {
-    this._finalValue = finalValue;
+    if (finalValue >= this.initialValue) {
+      this._finalValue = finalValue;
+    }else {
+      this._finalValue = this.initialValue;
+    }
+    this.calcIntervalBar();
   }
   get finalValue(): number {
     return this._finalValue;
@@ -77,7 +67,7 @@ export class ThfRangeComponent implements OnInit {
   private _minValue?: number = 0;
   @Input('t-minValue') set minValue(minValue: number) {
     this._minValue = minValue;
-    this._minorSelectedValue = minValue;
+    if (this.minValue > this.initialValue) { this.initialValue = minValue; }
   }
   get minValue(): number {
     return this._minValue;
@@ -87,7 +77,7 @@ export class ThfRangeComponent implements OnInit {
   private _maxValue?: number = 0;
   @Input('t-maxValue') set maxValue(maxValue: number) {
     this._maxValue = maxValue;
-    this._majorSelectedValue = maxValue;
+    // this._majorSelectedValue = maxValue;
     if (this.finalValue == this.minValue) { this.finalValue = maxValue; }
   }
   get maxValue(): number {
@@ -122,8 +112,8 @@ export class ThfRangeComponent implements OnInit {
   @Input('t-disabled') set setDisabled(disabled: string) {
     this.disabled = disabled === '' ? true : convertToBoolean(disabled);
   }
-
-   /**
+  
+  /**
    * Indica que mostrará os indicadores de valor
    *
    * @default false
@@ -132,29 +122,35 @@ export class ThfRangeComponent implements OnInit {
   @Input('t-indicators') set setIndicators(indicators: string) {
     this.indicators = indicators === '' ? true : convertToBoolean(indicators);
   }
+  
+  /** Evento disparado ao alterar valor e deixar o campo */
+  @Output('t-change') change = new EventEmitter<Array<number>>();
 
   ngOnInit() {
     this.calcIntervalBar();
   }
 
   eventOnInput(e: any) {
+
     if(!this.disabled) {
-
       this.calcIntervalBar();
-
+      this.change.emit([this.initialValue, this.finalValue]);
     }
+
   }
 
   calcIntervalBar(): void {
-      const initialValue = Number(this.initialValue);
-      const finalValue = Number(this.finalValue);
 
-      this.minorSelectedValue = initialValue < finalValue ? initialValue : finalValue;
-      this.majorSelectedValue = initialValue < finalValue ? finalValue : initialValue;
+    const initialValue = Number(this.initialValue);
+    const finalValue = Number(this.finalValue);
 
-      const percent = 100/this.calcTotNumbers();
-      this.intervalBeforeSelected = this.calcTotNumbersBefore() * percent;
-      this.intervalSelected = this.calcTotNumbersSelected() * percent;
+    // this.minorSelectedValue = initialValue < finalValue ? initialValue : finalValue;
+    // this.majorSelectedValue = initialValue < finalValue ? finalValue : initialValue;
+    
+    const percent = 100/this.calcTotNumbers();
+    this.intervalBeforeSelected = this.calcTotNumbersBefore() * percent;
+    this.intervalSelected = this.calcTotNumbersSelected() * percent;
+
   }
 
   calcTotNumbers(): number {
@@ -165,7 +161,7 @@ export class ThfRangeComponent implements OnInit {
     
     let qtdNumbers = 0;
     if (minValue == 0) {
-      qtdNumbers = ((maxValue-(minValue+interval))/interval) + 1;
+      qtdNumbers = ((maxValue-interval)/interval) + 1;
     } else {
       qtdNumbers = (maxValue-minValue)/interval;
     }
@@ -175,38 +171,45 @@ export class ThfRangeComponent implements OnInit {
   }
 
   calcTotNumbersBefore(): number {
+    
     const interval = Number(this.interval);
     const minValue = Number(this.minValue);
+    const initialValue = Number(this.initialValue);
+    const finalValue = Number(this.finalValue);
+
+    const minorSelectedValue = initialValue < finalValue ? initialValue : finalValue;
     
     let qtdNumbersBefore = 0;
     
     if (minValue == 0) {
-      qtdNumbersBefore = ((this.minorSelectedValue-(minValue+interval))/interval) + 1;
+      qtdNumbersBefore = ((minorSelectedValue-interval)/interval) + 1;
     } else {
-      qtdNumbersBefore = (this.minorSelectedValue-minValue)/interval;
+      qtdNumbersBefore = (minorSelectedValue-minValue)/interval;
     }
 
     return qtdNumbersBefore;
+
   }
 
   calcTotNumbersSelected(): number {
     
     const interval = Number(this.interval);
+    const initialValue = Number(this.initialValue);
+    const finalValue = Number(this.finalValue);
+
     let qtdNumbersSelected = 0;
+
+    const minorSelectedValue = initialValue < finalValue ? initialValue : finalValue;
+    const majorSelectedValue = initialValue < finalValue ? finalValue : initialValue;
     
-    if(this.minorSelectedValue == 0) {
-      qtdNumbersSelected = ((this._majorSelectedValue-(this.minorSelectedValue + interval))/interval) + 1;
+    if(minorSelectedValue == 0) {
+      qtdNumbersSelected = ((majorSelectedValue-(minorSelectedValue + interval))/interval) + 1;
     } else {
-      qtdNumbersSelected = (this._majorSelectedValue-this.minorSelectedValue)/interval;
+      qtdNumbersSelected = (majorSelectedValue-minorSelectedValue)/interval;
     }
 
     return qtdNumbersSelected;
+
   }
-
-  // /** Evento disparado ao alterar valor e deixar o campo */
-  // @Output('t-change') change?: EventEmitter<any> = new EventEmitter();
-
-  // // Função para atualizar o ngModel do componente, necessário quando não for utilizado dentro da tag form.
-  // @Output('ngModelChange') ngModelChange?: EventEmitter<any> = new EventEmitter<any>();
 
 }

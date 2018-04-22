@@ -6,7 +6,7 @@
   <div *ngIf="help!==''" class="thf-field-help">{{help}}</div>
   <div class="thf-field-container-input">
     <div [attr.name]="name" class="thf-range-container">
-      <span *ngIf="indicators" class="thf-range-minor-text thf-range-interval-text" [innerHtml]="minorSelectedValue"></span>
+      <span *ngIf="indicators" class="thf-range-minor-text thf-range-interval-text" [innerHtml]="initialValue"></span>
       <div class="thf-range-slider">
         <input 
           class="thf-range-slider-bar"
@@ -32,7 +32,7 @@
           [(ngModel)]="finalValue"/>
         <div class="thf-range-slider-bar-selected thf-range-slider-bar" [style.width.%]="intervalSelected" [style.left.%]="intervalBeforeSelected"></div>
       </div>
-      <span *ngIf="indicators" class="thf-range-major-text thf-range-interval-text" [innerHtml]="majorSelectedValue"></span>
+      <span *ngIf="indicators" class="thf-range-major-text thf-range-interval-text" [innerHtml]="finalValue"></span>
     </div>
   </div>
 </div>

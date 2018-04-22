@@ -128,6 +128,6 @@ input[type=range]:disabled::-webkit-slider-thumb {
     width: 12px;
 }
 
-input[type=range]:disabled ~ .bar{
+input[type=range]:disabled ~ .thf-range-slider-bar-selected{
 	background: #b6bdbf !important;
 }
