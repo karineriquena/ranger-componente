@@ -6,7 +6,10 @@
   <div *ngIf="help!==''" class="thf-field-help">{{help}}</div>
   <div class="thf-field-container-input">
     <div [attr.name]="name" class="thf-range-container">
-      <span *ngIf="indicators" class="thf-range-minor-text thf-range-interval-text" [innerHtml]="initialValue"></span>
+      <span *ngIf="indicators" class="thf-range-minor-text thf-range-interval-text">
+          <span *ngIf="indicators && money">{{moneySymbol}}&nbsp;</span>
+          <span>{{money ? minorSelectedValue.toFixed(2) : minorSelectedValue.toFixed(decimalPlaces)}}</span>
+      </span>
       <div class="thf-range-slider">
         <input 
           class="thf-range-slider-bar"
@@ -32,7 +35,10 @@
           [(ngModel)]="finalValue"/>
         <div class="thf-range-slider-bar-selected thf-range-slider-bar" [style.width.%]="intervalSelected" [style.left.%]="intervalBeforeSelected"></div>
       </div>
-      <span *ngIf="indicators" class="thf-range-major-text thf-range-interval-text" [innerHtml]="finalValue"></span>
+      <span *ngIf="indicators" class="thf-range-major-text thf-range-interval-text">
+          <span *ngIf="indicators && money">{{moneySymbol}}&nbsp;</span>
+          <span>{{money ? majorSelectedValue.toFixed(2) : majorSelectedValue.toFixed(decimalPlaces)}}</span>
+      </span>
     </div>
   </div>
 </div>

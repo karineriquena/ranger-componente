@@ -5,6 +5,7 @@
 }
 
 .thf-range-interval-text {
+    display: inline-flex;
     font-family: NunitoSans;
     font-size: 16px;
     font-stretch: normal;
@@ -12,7 +13,6 @@
     font-weight: normal;
     letter-spacing: normal;
     line-height: 1.5;
-    text-align: right;
 }
 
 .thf-range-minor-text {
@@ -51,6 +51,8 @@ input[type=range]{
 
 .thf-range-slider-bar-selected {
     background: #0c9abe;
+    width: 0%;
+    left: 0%;
 }
 
 input[type=range]::-ms-thumb {

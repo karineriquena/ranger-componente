@@ -1,0 +1,15 @@
+thf-button {
+    margin-bottom: 10px;
+}
+
+.product-container {
+    height: 250px;
+    margin-bottom: 10px;
+    border: 1px solid #eceeee;
+    padding: 5px;
+}
+
+.product-container img {
+    height: 80%;
+    width: 100%;
+}

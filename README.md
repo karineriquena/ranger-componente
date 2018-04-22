@@ -1,27 +1,52 @@
-# TesteThf
+# Totvs Range
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
+`import { ThfRangeModule } from '@totvs/thf-ui/components/thf-range';`
+Módulo do componente Thf Range
 
-## Development server
+# Componente
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+O `thf-range` é um componente específico para selecionar um intervalo de números. 
+Pode ser utilizado em aplicações com filtro por exemplo.
 
-## Code scaffolding
+# Seletor
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```sh
+<thf-range
+    name="string"
+    t-help="string"
+    t-label="string"
+    t-minValue="number"
+    t-maxValue="number"
+    t-interval="number"
+    t-decimalPlaces="number"
+    t-initialValue="number"
+    t-finalValue="number"
+    t-required="boolean"
+    t-disabled="boolean"
+    t-indicators="boolean"
+    t-money="boolean"
+    t-moneySymbol="string">
+    (t-change)="EventEmitter"
+</thf-range>
+```
+### Propriedades
 
-## Build
+| Nome | Tipo | Padrão | Descrição |
+| ------ | ------ | ------ | ------ |
+| name | string | - | Nome do componente. 
+| t-decimalPlaces | number | 0 | **_(opcional)_** Casas decimais.
+| t-disabled | boolean | false | **_(opcional)_** Indica que o campo estará desabilitado.
+| t-finalValue | number | 0 | **_(opcional)_** Valor final selecionado.
+| t-help | string | - | **_(opcional)_**  Texto de apoio para o campo.
+| t-label | string | - | **_(opcional)_**  Label exibido pelo componente.
+| t-maxValue | number | 0 | Valor máximo.
+| t-minValue | number | 0 | Valor mínimo.
+| t-indicators | boolean | false | **_(opcional)_** Indica se mostrará os valores selecionados no intervalo.
+| t-initialValue | number | 0 | **_(opcional)_**  Valor inicial selecionado.
+| t-interval | number | 0 | Intervalo um número e outro.
+| t-required | boolean | false | **_(opcional)_** Indica que o campo será obrigatório.
+| t-money | string | false | **_(opcional)_** Indica se será moeda.
+| t-moneySymbol | string | R$ | **_(opcional)_** Símbolo da moeda.
+| (t-change) | EventEmitter | - | **_(opcional)_** Evento disparado ao trocar o valor do range. Emite um array onde a posição [0] é igual ao menor número selecionado e a posição [1] é igual ao maior número selecionado.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
